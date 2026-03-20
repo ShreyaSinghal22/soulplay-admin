@@ -19,12 +19,12 @@ const Sidebar = () => {
                 <p className='hidden sm:block'>List Songs</p>
 
             </NavLink>
-            <NavLink to = "/addalbum" className='flex items-center gap-2.5 text-gray-800 bg-white border border-black p-2 pr-[max(8vw, 10px)] drop-shadow-[-4px_4px_#8c8f91] text-sm font-medium'>
+            <NavLink to = "/addalbums" className='flex items-center gap-2.5 text-gray-800 bg-white border border-black p-2 pr-[max(8vw, 10px)] drop-shadow-[-4px_4px_#8c8f91] text-sm font-medium'>
                 <img src={assets.add_album} alt="" className='w-5' />
                 <p className='hidden sm:block'>Add Album</p>
 
             </NavLink>
-            <NavLink to = "/listalbum" className='flex items-center gap-2.5 text-gray-800 bg-white border border-black p-2 pr-[max(8vw, 10px)] drop-shadow-[-4px_4px_#8c8f91] text-sm font-medium'>
+            <NavLink to = "/listalbums" className='flex items-center gap-2.5 text-gray-800 bg-white border border-black p-2 pr-[max(8vw, 10px)] drop-shadow-[-4px_4px_#8c8f91] text-sm font-medium'>
                 <img src={assets.album_icon} alt="" className='w-5' />
                 <p className='hidden sm:block'>List Albums</p>
 

@@ -9,9 +9,22 @@ const AddAlbum = () => {
   const [image, setImage] = React.useState(false);
   const [name, setName] = React.useState("");
   const [desc, setDesc] = React.useState("");
-  const [Color, setColor] = React.useState("#ffffff");
+  const [bgColour, setbgColour] = React.useState("#ffffff");
   const [loading, setLoading] = React.useState(false);
 
+  const [preview, setPreview] = React.useState(null);
+  React.useEffect(() => {
+    if (!image) {
+      setPreview(null);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(image);
+    setPreview(objectUrl);
+    
+    // Cleanup memory when component unmounts or image changes
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [image]);
+  
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -19,24 +32,25 @@ const AddAlbum = () => {
       const formData = new FormData();
       formData.append("name", name);
       formData.append("desc", desc);
-      formData.append("color", Color);
+      formData.append("bgColour", bgColour);
       formData.append("image", image);
 
       const response = await axios.post(`${url}/api/album/add`, formData);
 
       if(response.data.success){
-        toast.success("Album added successfully");
+        toast.success(response.data.message || "Album added successfully");
         setName("");
         setDesc("");
-        setColor("#ffffff");
+        setbgColour("#ffffff");
         setImage(false);
       } else {
-        toast.error("Failed to add album. Please try again.");
+        toast.error(response.data.message || "Failed to add album. Please try again.");
       }
     } catch{
         toast.error("An error occurred while adding the album.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   return loading ? (
@@ -49,7 +63,7 @@ const AddAlbum = () => {
         <p>Upload Image</p>
         <input onChange={(e) => setImage(e.target.files[0])} type='file' id='image' accept='image/*' hidden/>
         <label htmlFor='image'>
-          <img src={image ? URL.createObjectURL(image) : assets.upload_area} className='w-24 cursor-pointer' alt="" />
+          <img src={preview ? preview : assets.upload_area} className='w-24 cursor-pointer' alt="" />
         </label>
       </div>
       <div className='flex flex-col gap-2.5'>
@@ -62,7 +76,7 @@ const AddAlbum = () => {
       </div>
       <div className='flex flex-col gap-2.5'>
         <p>Background Colour</p>
-        <input onChange={(e)=>setColor(e.target.value)} value={Color} type="color" className='w-24 h-10 cursor-pointer' />
+        <input onChange={(e)=>setbgColour(e.target.value)} value={bgColour} type="color" className='w-24 h-10 cursor-pointer' />
       </div>
       <button type='submit' className='bg-black text-white px-6 py-2.5 rounded-lg'>Add Album</button>
     </form>
