@@ -24,14 +24,13 @@ const ListAlbums = () => {
       // Change from URL parameter to a Request Body object
       setData(data.filter(item => item.id !== id));
 
-      const response = await axios.post(`${url}/api/album/remove`, { id: id });
+      const response = await axios.post(`${url}/api/album/remove`, { id });
 
       if (response.data.success) {
         toast.success("Album deleted successfully!");
         // Optimistic UI update (optional but faster)
       } 
-    } catch {
-      await fetchAlbums(); // Revert to actual data on error
+    } catch { // Revert to actual data on error
       toast.error("An error occurred while deleting the album.");
     }
   };
@@ -41,25 +40,27 @@ const ListAlbums = () => {
   }, []);
 
   return (
-    <div>
-      <p>All Albums List</p>
+    <div className="className='p-8 w-full'">
+      <p className="text-xl mb-4">All Albums List</p>
       <br></br>
-      <div>
-        <div className='sm:grid hidden grid-cols-[0.5fr_1fr_2fr_1fr_0.5fr] items-center gap-2.5 p-3 border border-gray-300 text-sm mr-5 bg-gray-100'>
+      <div className='flex flex-col'>
+        <div className='sm:grid hidden grid-cols-[0.5fr_1fr_2fr_1fr_0.5fr] items-center gap-2.5 p-3 border border-gray-300 text-sm bg-gray-100'>
           <b>Image</b>
           <b>Name</b>
           <b>Description</b>
           <b>Album Color</b>
-          <b>Action</b>
+          <b className='text-center'>Action</b>
         </div>
         {data.map((item,index) => {
           return (
-            <div key={index} className='grid grid-cols-[1fr_1fr_1fr] sm:grid-cols-[0.5fr_1fr_2fr_1fr_0.5fr] items-center gap-2.5 p-3 border border-gray-300 text-sm mr-5'>
-              <img src={item.image_url} alt={item.name} className='w-12' />
-              <p>{item.name}</p>
+            <div key={index} className='grid grid-cols-[1fr_1fr_1fr] sm:grid-cols-[0.5fr_1fr_2fr_1fr_0.5fr] items-center gap-4 p-3 border border-gray-300 text-sm '>
+              <img src={item.image_url} alt="" className='w-12  h-12 object-cover rounded' />
+              <p className='font-medium'>{item.name}</p>
               <p>{item.description}</p>
               <input type="color" value={item.background_color} />
-              <button onClick={() => removeAlbum(item.id)} className='cursor-pointer m-2 bg-red-700 text-white py-1 px-4 rounded'>Delete</button>
+              <div className='flex justify-center'>
+               <button onClick={() => removeAlbum(item.id)} className='cursor-pointer m-2 bg-red-700 text-white py-1 px-2 rounded'>Delete</button>
+              </div>
             </div>
           )
         })} 

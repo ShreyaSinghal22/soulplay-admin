@@ -11,8 +11,9 @@ const AddAlbum = () => {
   const [desc, setDesc] = React.useState("");
   const [bgColour, setbgColour] = React.useState("#ffffff");
   const [loading, setLoading] = React.useState(false);
-
   const [preview, setPreview] = React.useState(null);
+
+
   React.useEffect(() => {
     if (!image) {
       setPreview(null);
@@ -42,7 +43,7 @@ const AddAlbum = () => {
         setName("");
         setDesc("");
         setbgColour("#ffffff");
-        setImage(false);
+        setImage(null);
       } else {
         toast.error(response.data.message || "Failed to add album. Please try again.");
       }

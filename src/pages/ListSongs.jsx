@@ -9,7 +9,7 @@ const ListSongs = () => {
 
   React.useEffect(() => {
     fetchSongs();
-   }, []);
+  }, []);
 
 
   const fetchSongs = async () => {
