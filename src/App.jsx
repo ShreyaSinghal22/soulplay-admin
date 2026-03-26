@@ -6,12 +6,13 @@ import ListAlbums  from './pages/ListAlbums';
 import  ListSongs  from './pages/ListSongs';
 import  AddAlbum from './pages/AddAlbums';
 import  AddSongs from './pages/AddSongs';
-import Sidebar from './components/sidebar';
+import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
-import VITE_BACKEND_URL from './env';
+
 
 // For Vite (which you are using, based on your terminal)
 export const url = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+console.log("My Backend URL is:", url);
 
 const App = () => {
   return (
